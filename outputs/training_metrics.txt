@@ -1,0 +1,5 @@
+Best Params: {'n_estimators': 264, 'max_depth': 3, 'learning_rate': 0.2580895283903688, 'subsample': 0.6509979800635292, 'colsample_bytree': 0.8896083450871988, 'reg_alpha': 0.6738887272444334, 'reg_lambda': 0.7534967132309058}
+Accuracy: 1.0000
+Precision: 1.0000
+Recall: 1.0000
+F1-Score: 1.0000
