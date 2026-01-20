@@ -35,6 +35,7 @@ def objective(trial, X_train, X_test, y_train, y_test):
 def train_model():
     # Load data
     X_train, X_test, y_train, y_test = preprocess_for_xgboost()
+    print(X_train.columns)
 
     # 1. Optuna Hyperparameter Tuning
     print("--- Starting Optuna Tuning ---")
