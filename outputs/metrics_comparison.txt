@@ -1,0 +1,11 @@
+=== CareerPath Pro: Feature Importance Comparison Analysis ===
+
+MODEL 1: PLACEMENT STATUS
+Top 3 Drivers: IQ, Projects_Completed, CGPA
+- Analysis: Soft skills and Internships dominate the initial hire.
+
+MODEL 2: SALARY PACKAGE
+Top 3 Drivers: Academic_Power, IQ, CGPA
+- Analysis: Hard technical metrics like CGPA determine the monetary value.
+
+CONCLUSION: Hiring vs. Compensation rely on different profile strengths.
