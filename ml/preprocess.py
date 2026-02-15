@@ -10,10 +10,6 @@ DATA_PATH = os.path.join(BASE_DIR, 'data', 'college_student_placement_dataset.cs
 MODEL_DIR = os.path.join(os.path.dirname(__file__), 'models')
 
 def synthesize_salary(df):
-    """
-    TASK 1: Realistic Data Synthesis (Checkpoint 3)
-    Must be called AFTER encoding Internship_Experience to avoid TypeError.
-    """
     np.random.seed(42)
     
     # Base Salary calculation

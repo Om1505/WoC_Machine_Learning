@@ -7,10 +7,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(BASE_DIR, 'ml', 'models')
 
 def predict_student_outcome(student_features):
-    """
-    Task 3 & 7: Returns both Placement Status and Estimated Salary.
-    Incorporates logic to return 0 salary if placement is negative.
-    """
     # Load optimized models and encoders
     clf = joblib.load(os.path.join(MODEL_DIR, 'placement_model.pkl'))
     reg = joblib.load(os.path.join(MODEL_DIR, 'salary_model.pkl'))

@@ -19,7 +19,7 @@ def generate_comparison_report():
     clf = joblib.load(os.path.join(MODEL_DIR, 'placement_model.pkl'))
     reg = joblib.load(os.path.join(MODEL_DIR, 'salary_model.pkl'))
     
-    # FIX: Use .get_booster() to access the internal importance scores
+    #  Use .get_booster() to access the internal importance scores
     clf_imp = clf.get_booster().get_score(importance_type='weight')
     reg_imp = reg.get_booster().get_score(importance_type='weight')
     
