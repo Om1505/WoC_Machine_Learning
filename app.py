@@ -68,18 +68,15 @@ if st.button("🔮 Predict My Future"):
             res_col1.success("### Status: PLACED!")
             res_col1.write(f"**Confidence:** {prob*100:.2f}%")
             
-            # Predict Salary
             salary = reg.predict(df_features)[0]
             res_col2.metric("Estimated Salary Package", f"₹{max(0, salary):,.2f}")
         else:
             res_col1.error("### Status: NOT PLACED")
             res_col1.write(f"**Confidence:** {(1-prob)*100:.2f}%")
             
-            # --- DYNAMIC TIP LOGIC (Winning Strategy) ---
             if internships == 0:
                 tip = "💡 Tip: Focus on securing an **Internship** and building more **Technical Projects**."
             else:
-                # If they already have an internship, suggest focusing on skills/GPA
                 tip = "💡 Tip: You have experience! Focus on increasing your **CGPA** or **Communication Skills** to cross the final threshold."
             
             res_col2.info(tip)

@@ -8,7 +8,6 @@ import os
 from sklearn.metrics import accuracy_score, f1_score, mean_absolute_error, r2_score
 from preprocess import preprocess_for_xgboost
 
-# Pathing
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUTPUT_DIR = os.path.join(BASE_DIR, 'outputs')
 MODEL_DIR = os.path.join(os.path.dirname(__file__), 'models')
@@ -34,31 +33,25 @@ def objective_regression(trial, X_train, X_test, y_train, y_test):
     }
     model = xgb.XGBRegressor(**param)
     model.fit(X_train, y_train)
-    # We minimize MAE for the salary model
     return mean_absolute_error(y_test, model.predict(X_test))
 
 def train_dual_models():
-    # Load data from Checkpoint 3 Preprocessor
     X_train, X_test, y_p_train, y_p_test, y_s_train, y_s_test = preprocess_for_xgboost()
 
-    # 1. Optimize Placement Model
     print("--- Optimizing Placement Classifier ---")
     study_clf = optuna.create_study(direction='maximize')
     study_clf.optimize(lambda t: objective_classification(t, X_train, X_test, y_p_train, y_p_test), n_trials=20)
     
-    # 2. Optimize Salary Model
     print("--- Optimizing Salary Regressor ---")
     study_reg = optuna.create_study(direction='minimize')
     study_reg.optimize(lambda t: objective_regression(t, X_train, X_test, y_s_train, y_s_test), n_trials=20)
 
-    # 3. Train Final Models with Best Params
     clf = xgb.XGBClassifier(**study_clf.best_params, use_label_encoder=False, eval_metric='logloss')
     clf.fit(X_train, y_p_train)
     
     reg = xgb.XGBRegressor(**study_reg.best_params)
     reg.fit(X_train, y_s_train)
 
-    # 4. Evaluation & Metrics
     y_p_pred = clf.predict(X_test)
     y_s_pred = reg.predict(X_test)
     
@@ -68,7 +61,6 @@ def train_dual_models():
 
     print(f"\nPlacement Accuracy: {acc:.4f} | Salary MAE: ₹{mae:.2f}")
 
-    # 5. Save Visual Comparison (Task 3)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
     xgb.plot_importance(clf, ax=ax1, color='#710193', title='Placement Importance')
@@ -76,12 +68,10 @@ def train_dual_models():
     plt.savefig(os.path.join(OUTPUT_DIR, 'salary_importance.png'))
     plt.close()
 
-    # 6. Save Model Artifacts
     os.makedirs(MODEL_DIR, exist_ok=True)
     joblib.dump(clf, os.path.join(MODEL_DIR, 'placement_model.pkl'))
     joblib.dump(reg, os.path.join(MODEL_DIR, 'salary_model.pkl'))
     
-    # Save Metrics for Submission
     with open(os.path.join(OUTPUT_DIR, 'training_metrics.txt'), 'w', encoding='utf-8') as f:
         f.write(f"Placement Accuracy: {acc:.4f}\nSalary MAE: ₹{mae:.2f}\nSalary R2: {r2:.4f}")
 

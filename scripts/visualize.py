@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 import os
 
-# Custom Halloween Palette (Orange, Purple, Black) 
 HALLOWEEN_COLORS = ["#000000", "#710193", "#FF7518"] 
 CUSTOM_CMAP = LinearSegmentedColormap.from_list("halloween", HALLOWEEN_COLORS)
 
@@ -15,7 +14,6 @@ def setup_directories():
 def generate_visualizations(data_path):
     df = pd.read_csv(data_path)
     
-    # CORRELATION HEATMAP 
     plt.figure(figsize=(10, 8))
     correlation = df.corr(numeric_only=True)
     sns.heatmap(correlation, annot=True, cmap=CUSTOM_CMAP, fmt='.2f')
@@ -23,21 +21,17 @@ def generate_visualizations(data_path):
     plt.savefig('reports/figures/correlation_heatmap.png')
     plt.close()
 
-    # DISTRIBUTION PLOTS 
     fig, axes = plt.subplots(1, 2, figsize=(15, 6))
     
-    # CGPA Distribution
     sns.histplot(df['CGPA'], kde=True, color="#FF7518", ax=axes[0])
     axes[0].set_title('CGPA Distribution (Outlier-Capped)')
     
-    # IQ Score Distribution
     sns.histplot(df['IQ'], kde=True, color="#710193", ax=axes[1])
     axes[1].set_title('IQ Score Distribution (Outlier-Capped)')
     
     plt.savefig('reports/figures/distribution_plots.png')
     plt.close()
 
-    # BOX PLOTS
     plt.figure(figsize=(10, 6))
     sns.boxplot(x='Placement', y='CGPA', data=df, palette=[HALLOWEEN_COLORS[1], HALLOWEEN_COLORS[2]])
     plt.title('Placement Status vs. Academic Performance')
