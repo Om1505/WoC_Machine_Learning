@@ -1,0 +1,6 @@
+[theme]
+primaryColor = "#FF7518"          # Pumpkin Orange
+backgroundColor = "#000000"       # Deep Black
+secondaryBackgroundColor = "#710193" # Deep Purple
+textColor = "#FFFFFF"            # White Text
+font = "monospace"
