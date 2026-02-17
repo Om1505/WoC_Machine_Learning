@@ -9,3 +9,4 @@ scipy
 shap
 optuna
 streamlit
+joblib
